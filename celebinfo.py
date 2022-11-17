@@ -142,4 +142,4 @@ def name(celeb_name):
 		return json.dumps(response, sort_keys=True, indent=4, separators=(',', ': '))
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=10050)
