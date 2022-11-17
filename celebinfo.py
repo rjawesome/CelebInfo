@@ -8,7 +8,7 @@ import json
 import datetime
 
 app = Flask(__name__)
-app.config.from_pyfile('flaskapp.cfg')
+# app.config.from_pyfile('flaskapp.cfg')
 
 @app.route('/')
 def index(): 
@@ -20,7 +20,9 @@ def api(day, month):
 	URL = "http://www.famousbirthdays.com/" + str(month) + str(day) + ".html"
 	HTML = requests.get(URL).content
 	SOUP = BeautifulSoup(HTML, "html.parser")
-	ALL_LINKS = SOUP.find_all('a', 'celeb')
+	ALL_LINKS = SOUP.find_all('a', 'person-item')
+	print(ALL_LINKS)
+	print(HTML)
 
 	# Variables to store date
 	response = {}
@@ -37,7 +39,7 @@ def api(day, month):
 		HTML = requests.get(URL).content
 		SOUP = BeautifulSoup(HTML, "html.parser")
 
-		try:name = SOUP.find_all('h2')[1].string
+		try:name = SOUP.find_all('h1')[0].string
 		except:name = "Not Found"
 
 		try:photo_url = SOUP.figure.a.img['src']
